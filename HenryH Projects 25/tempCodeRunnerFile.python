@@ -1,0 +1,7 @@
+def hello():
+    print("hi")
+    hola()
+def hola():
+    print("hola")
+    hello()
+hello()

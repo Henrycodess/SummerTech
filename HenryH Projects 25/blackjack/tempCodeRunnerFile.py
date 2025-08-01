@@ -1,0 +1,2 @@
+.pop(i))
+                        pturn = False
