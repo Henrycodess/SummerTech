@@ -26,15 +26,12 @@ public class Card {
         
             case 11:
                 cardName = "Jack";
-                this.value = 10;
                 break;
             case 12:
                 cardName = "Queen";
-                this.value = 10;
                 break;
             case 13:
                 cardName = "King";
-                this.value = 10;
                 break;
             default:
                 cardName = String.valueOf(value);
@@ -53,8 +50,6 @@ public class Card {
             case 3:
                 cardName += " Of Clubs";
                 break;
-            default:
-                cardName += String.valueOf(suit);
         }
         return cardName;
     }
