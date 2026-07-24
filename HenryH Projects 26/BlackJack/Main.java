@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class Main {
     public static Boolean playerTurn = true;
+    public static ArrayList<Card> playerHand = new ArrayList<Card>();
+    public static ArrayList<Card> dealerHand = new ArrayList<Card>();
+    public static Deck deck = new Deck();
     public static void main(String[] args) {
-        ArrayList<Card> playerHand = new ArrayList<Card>();
-        ArrayList<Card> dealerHand = new ArrayList<Card>();
-        Deck deck = new Deck();
         deck.Shuffle();
         playerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck());
         playerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck());
@@ -13,11 +13,22 @@ public class Main {
         dealerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck());
         System.out.println(dealerHand.get(0));
         while (playerTurn){
-            Turn(playerHand, deck);
+            Turn();
+            System.out.println(playerTurn);
         }
-        for (int i = 0; i < 100; i++){
-            System.out.println("");
+        while (!playerTurn){
+            Turn();
         }
+        if (sumHand(playerHand) > sumHand(dealerHand)){
+            System.out.println("Player wins");
+        }
+        else if (sumHand(playerHand) < sumHand(dealerHand)){
+            System.out.println("Dealer wins");
+        }
+        else{
+            System.out.println("Tie...");
+        }
+        System.out.println("yaay");
     }
     public static int sumHand(ArrayList<Card> hand){
         int sum = 0;
@@ -26,7 +37,7 @@ public class Main {
             sum += hand.get(i).getValue();
             if (hand.get(i).toString().contains("Ace")){
                 if (sum + 10 <= 21){
-                    sum += 10;
+                    sum += 10; 
                     ace11s += 1;
                 }
             }
@@ -36,23 +47,48 @@ public class Main {
         }
         return sum;
     }
-    public static void Turn(ArrayList<Card> hand, Deck deck){
+    public static boolean Turn(){
         Scanner scanny = new Scanner(System.in);
-        System.out.println(hand);
-        System.out.println(String.valueOf(sumHand(hand)));
-        System.out.println("Hit or Stand?");
-        if (scanny.next().equalsIgnoreCase("hit")){
-            hand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck());
+        if (playerTurn){        
+            System.out.println(playerHand);
+            System.out.println(String.valueOf(sumHand(playerHand)));
         }
-        else if (scanny.next().equalsIgnoreCase("stand")){
+        else{
+            System.out.println(dealerHand);
+            System.out.println(String.valueOf(sumHand(dealerHand)));
+        }
+        System.out.println("Hit or Stand?");
+        String input = scanny.next();
+        if (input.equalsIgnoreCase("hit")){
+            if (playerTurn){
+                playerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck());
+                if (playerHand.get(playerHand.size() - 1).getSuit() == 0){
+                    BlackJackGUI.Turn("BJcard_" + String.valueOf(playerHand.get(playerHand.size() - 1).getValue() - 1) + ".png");
+                    System.out.println("gfijofdihjgofdihgfdkiikddiiddididiid");
+                }
+            }
+            else{dealerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck());}
+        }
+        else if (input.equalsIgnoreCase("stand")){
             playerTurn = !playerTurn;
+            return true;
         }
         else{
             System.out.println("Wrong move bucko");
         }
-        if (sumHand(hand) > 21){
-            System.out.println("Bust");
-            System.exit(67);
+        if (playerTurn){        
+            if (sumHand(playerHand) > 21){
+                System.out.println("Bust");
+                System.exit(67);
+            }
         }
+        else{
+            if (sumHand(dealerHand) > 21){
+                System.out.println("Bust");
+                System.exit(67);
+            }
+        }
+        return true;
+
     }
 }

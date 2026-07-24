@@ -4,10 +4,10 @@ public class Deck {
     private ArrayList<Card> deck = new ArrayList<Card>();
     private int deckSize;
     public Deck(){
-        for (int i = 1; i < 12; i++){
+        for (int i = 1; i < 14; i++){
             for (int j = 0; j < 4; j++){
-                deck.add(new Card(j++, i));
-                deckSize = i++ * j++;
+                deck.add(new Card(j, i));
+                deckSize++;
             }
         }
     }
