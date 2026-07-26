@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,11 +9,15 @@ public class BlackJackGUI{
     public static JButton Hit = new JButton("Hit");
     public static JButton Stand = new JButton("Stand");
     public static JFrame jJFrame = new JFrame("Blackjack");
-    public static ImageIcon cardIcon = new ImageIcon("./Deck/BJcard_0.png");
+    public static ImageIcon cardIcon = new ImageIcon("C:\\Users\\user\\HHST\\SummerTech\\HenryH Projects 26\\BlackJack\\Deck\\BJcard_0.png");
+    public static String imagePath = "C:\\Users\\user\\HHST\\SummerTech\\HenryH Projects 26\\BlackJack\\Deck\\";
     public static JLabel dealerUp = new JLabel("");
-    public static JLabel dealerDown = new JLabel("ddc");
-    public static JLabel playerUp = new JLabel("glpdlfp[sdlf");
-    public static JLabel playerDown = new JLabel("pp");
+    public static JLabel dealerDown = new JLabel("");
+    public static JLabel playerUp = new JLabel("");
+    public static JLabel playerDown = new JLabel("");
+    public static JLabel playerThree = new JLabel("");
+    public static JLabel playerFour = new JLabel("");
+    public static JLabel playerFive = new JLabel("");
     public static JLabel dealerLabel = new JLabel("Dealer");
     public static JLabel playerLabel = new JLabel("Player");
     public static JPanel dealerSide = new JPanel();
@@ -24,8 +27,8 @@ public class BlackJackGUI{
     public static Boolean gameOver = false;
     public static ArrayList<Card> playerHand = new ArrayList<Card>();
     public static ArrayList<Card> dealerHand = new ArrayList<Card>();
+    public static ArrayList<JLabel> playerCards = new ArrayList<JLabel>();
     public static Deck deck = new Deck();
-
     public static void Turn(){
         if (playerTurn){        
             System.out.println(playerHand);
@@ -54,16 +57,16 @@ public class BlackJackGUI{
         }
         return sum;
     }
-    public String getImagePath(Card card){
+    public static String getImagePath(Card card){
         switch (card.getSuit()){
             case 0:
-                return "BJcard_" + String.valueOf(card.getValue() + 25) + ".png";
+                return imagePath + "BJcard_" + String.valueOf(card.getValue() + 25) + ".png";
             case 1:
-               return "BJcard_" + String.valueOf(card.getValue() - 1) + ".png";
+                return imagePath + "BJcard_" + String.valueOf(card.getValue() - 1) + ".png";
             case 2:
-                return "BJcard_" + String.valueOf(card.getValue() + 12) + ".png";
+                return imagePath + "BJcard_" + String.valueOf(card.getValue() + 12) + ".png";
             case 3:
-                return "BJcard_" + String.valueOf(card.getValue() + 38) + ".png";
+                return imagePath + "BJcard_" + String.valueOf(card.getValue() + 38) + ".png";
             default:
                 return "failed... somehow";
         }
@@ -93,7 +96,6 @@ public class BlackJackGUI{
         //Cards
         for (int i = 0; i < 60; i++){
             deckImages[i] = "BJcard_" + String.valueOf(i) + ".png";
-            System.out.println(deckImages[i]);
         }
         buttonSide.add(Hit);
         buttonSide.add(Stand);
@@ -108,17 +110,30 @@ public class BlackJackGUI{
         jJFrame.setSize(500, 500);
         // Game
         deck.Shuffle();
+        playerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck()); //upcard
+        cardIcon = new ImageIcon(getImagePath(playerHand.get(playerHand.size() - 1)));
+        playerUp.setIcon(cardIcon);
         playerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck());
-        playerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck());
+        cardIcon = new ImageIcon(getImagePath(playerHand.get(playerHand.size() - 1)));
+        playerDown.setIcon(cardIcon);
         dealerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck()); //upcard
+        cardIcon = new ImageIcon(getImagePath(dealerHand.get(dealerHand.size() - 1)));
         dealerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck());
+        cardIcon = new ImageIcon(imagePath + "BJcard_52.png");
+        dealerDown.setIcon(cardIcon);
         System.out.println(dealerHand.get(0) + "dealers upcard");
         System.out.println(playerHand);
         System.out.println(String.valueOf(sumHand(playerHand)));
         Hit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (playerTurn){playerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck());}
+                if (playerTurn){
+                    playerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck());
+                    cardIcon = new ImageIcon(getImagePath(playerHand.get(playerHand.size() - 1)));
+                    playerCards.add(new JLabel(""));
+                    playerCards.get(playerCards.size() - 1).setIcon(cardIcon);
+                    jJFrame.add(playerCards.get(playerCards.size() - 1));
+                }
                 else{dealerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck());}
                 System.out.println("gogogogogoogogogogogo");
                 if (playerTurn){        
@@ -173,12 +188,15 @@ public class BlackJackGUI{
                 if (playerTurn){
                     if (sumHand(playerHand) > sumHand(dealerHand)){
                         System.out.println("Player wins");
+                        System.exit(67);
                     }
                     else if (sumHand(playerHand) < sumHand(dealerHand)){
                         System.out.println("Dealer wins");
+                        System.exit(67);
                     }
                     else{
                         System.out.println("Tie...");
+                        System.exit(67);
                     }
                 }
             } 
