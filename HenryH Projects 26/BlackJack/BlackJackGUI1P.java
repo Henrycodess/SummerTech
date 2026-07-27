@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-public class BlackJackGUI{
+public class BlackJackGUI1P{
     public static JButton Hit = new JButton("Hit");
     public static JButton Stand = new JButton("Stand");
     public static JFrame jJFrame = new JFrame("Blackjack");
@@ -109,6 +109,7 @@ public class BlackJackGUI{
         jJFrame.setVisible(true);
         jJFrame.setSize(500, 500);
         // Game
+        deck = new Deck();
         deck.Shuffle();
         playerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck()); //upcard
         cardIcon = new ImageIcon(getImagePath(playerHand.get(playerHand.size() - 1)));
@@ -218,5 +219,24 @@ public class BlackJackGUI{
                 }
             } 
         });
+
+        while (true){
+            System.out.println(playerTurn);
+            if (!playerTurn){
+                try{
+                    Thread.sleep(2000);
+                }
+                catch(InterruptedException e){
+                    
+                }
+                System.out.println("blehhhhhhhh");  
+                if (sumHand(dealerHand) < 17){
+                    Hit.doClick(250);
+                }
+                else{
+                    Stand.doClick(250);
+                }
+            }
+        }
     }
 }
