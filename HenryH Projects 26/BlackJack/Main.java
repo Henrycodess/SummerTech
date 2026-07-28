@@ -63,7 +63,6 @@ public class Main {
             if (playerTurn){
                 playerHand.add(deck.functionThatsSoleFunctionIsToDrawACardFromTheDeck());
                 if (playerHand.get(playerHand.size() - 1).getSuit() == 0){
-                    BlackJackGUI.Turn("BJcard_" + String.valueOf(playerHand.get(playerHand.size() - 1).getValue() - 1) + ".png");
                     System.out.println("gfijofdihjgofdihgfdkiikddiiddididiid");
                 }
             }
@@ -71,6 +70,7 @@ public class Main {
         }
         else if (input.equalsIgnoreCase("stand")){
             playerTurn = !playerTurn;
+            scanny.close();
             return true;
         }
         else{
@@ -88,6 +88,7 @@ public class Main {
                 System.exit(67);
             }
         }
+        scanny.close();
         return true;
 
     }
