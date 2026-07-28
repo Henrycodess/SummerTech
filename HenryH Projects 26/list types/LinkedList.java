@@ -13,16 +13,8 @@ public class LinkedList {
     }
     public void addNode(int value){
         Node newNode = new Node(value);
-        if (head == null){
-            head = newNode;
-            length++;
-            return;            
-        }
-        Node tempNext = head;
-        for (int i = 0; i < length - 1; i++){
-            tempNext = tempNext.getNextNode();
-        }
-        tempNext.setNextNode(newNode);
+        newNode.setNextNode(head);
+        head = newNode;
         length++;
     }
     public void removeNode(int value){
@@ -32,7 +24,7 @@ public class LinkedList {
             length--;
             return;
         }
-        for (int i = 0; i < length - 1; i++){
+        while (tempNext.getNextNode() != null){
             if (tempNext.getNextNode().getNextNode() == null){
                 if (tempNext.getNextNode().getValue() == value){
                     tempNext.setNextNode(null);
