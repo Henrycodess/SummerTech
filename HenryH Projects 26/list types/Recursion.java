@@ -28,7 +28,7 @@ public class Recursion {
     public static void main(String[] args) {
         System.out.println(factorialCool(10));
         System.out.println(multiply(4, 7));
-        System.out.println(sumDigits(128));
-        System.out.println(fibbonacci(50));
+        System.out.println(sumDigits(118));
+        System.out.println(fibbonacci(7));
     }
 }

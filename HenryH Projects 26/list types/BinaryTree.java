@@ -6,7 +6,25 @@ public class BinaryTree {
     public BinaryTree(int value){
         this.head  = new BinaryNode(value);
     }
-    public void addNode(int value){
-        
+    public void addNode(int value, BinaryNode currentNode){
+        if (value < currentNode.getValue()){
+            currentNode = currentNode.getLeftNode();
+            if (currentNode == null){
+                currentNode = new BinaryNode(value);
+            }
+            else{
+                addNode(value, currentNode);
+            }
+        }
+        else{
+            currentNode = currentNode.getRightNode();
+            if (currentNode == null){
+                currentNode = new BinaryNode(value);
+            }
+            else{
+                addNode(value, currentNode);
+            }
+        }
     }
 }
+    
