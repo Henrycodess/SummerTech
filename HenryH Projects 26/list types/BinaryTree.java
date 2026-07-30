@@ -82,26 +82,30 @@ public class BinaryTree {
             }
         }
     }
-    public void deleteMiddle(int value, BinaryNode currentNode){
-        if (value < currentNode.getValue()){
-            if (currentNode.getLeftNode() == null){
+    public void deleteMiddle(int value){
+        deleteMiddle(value, head);
+    }
+    public void deleteMiddle(int value, BinaryNode prevNode){
+        if (value < prevNode.getValue()){
+            if (prevNode.getLeftNode() == null){
                 return;
             }
             else{
-                searchDelete(value, currentNode.getLeftNode());
-                if (currentNode.getLeftNode().getValue() == value){
-                    currentNode.setLeftNode(null);
+                deleteMiddle(value, prevNode.getLeftNode());
+                if (prevNode.getLeftNode().getValue() == value){
+                    prevNode.setLeftNode(null);
                 }
             }
         }
         else{
-            if (currentNode.getRightNode() == null){
+            if (prevNode.getRightNode() == null){
                 return;
             }
             else{
-                searchDelete(value, currentNode.getRightNode());
-                if (currentNode.getRightNode().getValue() == value){
-                    currentNode.setRightNode(null);
+                deleteMiddle(value, prevNode.getRightNode());
+                if (prevNode.getRightNode().getValue() == value){
+                    deleteMiddle(value, prevNode.getLeftNode());
+                    prevNode.setRightNode(prevNode.getLeftNode().getLeftNode());
                 }
             }
         }
