@@ -83,12 +83,23 @@ public class BinaryTree {
         }
     }
     public void deleteMiddle(int value){
+        if (value == head.getValue()){
+            
+        }
         deleteMiddle(value, head);
     }
     public BinaryNode deleteMiddle(int value, BinaryNode prevNode){
         if (value <= prevNode.getValue()){
             if (prevNode.getLeftNode() == null){
                 return null;
+            }
+            else if (prevNode.getLeftNode().getValue() == value && prevNode.getLeftNode().getRightNode() == null && prevNode.getLeftNode().getLeftNode() == null){
+                prevNode.setLeftNode(null);
+                return prevNode;
+            }
+            else if (prevNode.getRightNode().getValue() == value && prevNode.getRightNode().getRightNode() == null && prevNode.getRightNode().getLeftNode() == null){
+                prevNode.setRightNode(null);
+                return prevNode;
             }
             else{
                 deleteMiddle(value, prevNode.getLeftNode());

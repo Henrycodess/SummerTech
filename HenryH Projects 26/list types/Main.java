@@ -8,7 +8,7 @@ public class Main {
         tree.addNode(3);
         tree.addNode(1);
         tree.printTree();
-        tree.deleteMiddle(5);
+        tree.deleteMiddle(4);
         System.out.println("new tree");
         tree.printTree();
     }
