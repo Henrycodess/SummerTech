@@ -85,29 +85,31 @@ public class BinaryTree {
     public void deleteMiddle(int value){
         deleteMiddle(value, head);
     }
-    public void deleteMiddle(int value, BinaryNode prevNode){
+    public BinaryNode deleteMiddle(int value, BinaryNode prevNode){
         if (value < prevNode.getValue()){
             if (prevNode.getLeftNode() == null){
-                return;
+                return null;
             }
             else{
                 deleteMiddle(value, prevNode.getLeftNode());
                 if (prevNode.getLeftNode().getValue() == value){
-                    prevNode.setLeftNode(null);
-                }
-            }
-        }
-        else{
-            if (prevNode.getRightNode() == null){
-                return;
-            }
-            else{
-                deleteMiddle(value, prevNode.getRightNode());
-                if (prevNode.getRightNode().getValue() == value){
                     deleteMiddle(value, prevNode.getLeftNode());
                     prevNode.setRightNode(prevNode.getLeftNode().getLeftNode());
                 }
             }
         }
+        else{
+            if (prevNode.getRightNode() == null){
+                return null;
+            }
+            else{
+                deleteMiddle(value, prevNode.getRightNode());
+                if (prevNode.getRightNode().getValue() == value){
+                    prevNode.setRightNode(deleteMiddle(value, prevNode.getLeftNode()));
+                    return null;
+                }
+            }
+        }
     }
 }   
+//noodle prevNoodle = new Noodle(1);
